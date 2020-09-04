@@ -1,0 +1,34 @@
+\tikzset{external/export next=false}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+
+\begin{tikzpicture}[node distance = 2cm, auto]
+% Place nodes
+\node [startstop] (start) {Start};
+\node (init) [io, below of=start] {Initialization: $k=0, H_\infty^{0}, \vec{e}^0,  \vec{Q}^0$};
+\node (E) [process, below of=init] {Mapping error: $\vec{E}^{(k)}  = I_1(N(x_{ij}))- F^{(k)}(H_\infty^{k}, \vec{e}^k,  \vec{Q}^k, \rdx_{ij})$};
+\node (dec) [decision, below of=E, yshift=-3cm] {$\left | E^{(k-1)}-E^{(k)} \right | \leq Threshold$};
+\node (final-beta) [process, below of=dec, yshift=-3cm] {Final Result: $H_\infty=H_\infty^{k}, \vec{e}=\vec{e}^k,  \vec{Q}=\vec{Q}^k$};
+\node (stop) [startstop, below of=final-beta] {Stop};
+\node (Q-optimize) [process, right of=dec, xshift=5cm]{Optimize $\vec{Q}^{k+1}$ per patch seperately with constant $H_\infty^{k}, \rde^k$};
+\node (He-optimize) [process, above of=Q-optimize, yshift=0.5cm] {Optimize $H_\infty^{k+1}, \rde^{k+1}$ for all patches with constant $\vec{Q}^{k+1}$};
+\node (k) [process, above of=He-optimize, yshift=0.5cm] {Next Cycle: $k = k+1$};
+
+% Draw edges
+\draw [arrow] (start) -- (init);
+\draw [arrow] (init) -- (E);
+\draw [arrow] (E) -- (dec);
+\draw [arrow] (dec) -- node[anchor=east]{True}(final-beta);
+\draw [arrow] (final-beta) --(stop);
+\draw [arrow] (dec) -- node[near start]{False}(Q-optimize);
+\draw [arrow] (Q-optimize) -- (He-optimize);
+\draw [arrow] (He-optimize) -- (k);
+\draw [arrow] (k) -- (E);
+\end{tikzpicture}
+	

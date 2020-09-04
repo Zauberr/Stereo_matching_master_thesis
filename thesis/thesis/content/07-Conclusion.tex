@@ -1,0 +1,40 @@
+\chapter{Conclusion}\label{ch:Conclusion}
+In this master thesis, a new algorithm to improve image registration for a piecewise planar world has been presented, which is based on multiple homography estimation and Gauss-Newton method. Furthermore, for a more comprehensive and systematic evaluation of this algorithm, a new dataset has been created entirely computer generated in 3D using virtual engine software Blender. Finally, the algorithm was evaluated on some public dataset and the self-built dataset both.
+
+We considered two cases in the evaluation, one where the relative orientation between the images is known and one where it has to be determined. In the first case, the evaluation has shown that the algorithm has a very good performance when $H_{\infty}$ and $\rde$ are known i.e. the algorithm is very suitable for rectified images. 
+
+The evaluation result of the normal unrectified images shows that the final algorithm has achieved the set goal: estimation of multiple homography of plane patches. Through the analysis of the evaluation results, we can conclude that the algorithm can be used in any pair of images, as long as there is the same plane in the images. In addition, a proper initialization has a significant impact on the results of the algorithm. 
+
+In general, the classical homography transformation can only be used for images registration with one large plane. We have successfully implemented the multiple homography to register the sub-patches of images, even if there is more than one plane in the image. 
+
+The final result of multiple homography matrices is linked by the global parameters and local parameters. The global parameters contain the information of fundamental matrix, which means that we can also get the fundamental matrix of images from the algorithm. Therefore, the algorithm can also be used to follow camera path.
+
+Finally, a suitable, correct and credible dataset is successfully built in the thesis. It was used to evaluate the algorithm and uploaded as a public dataset for the future work. In the dataset, there is not only the built images and ground truth but also the source code and 3D environment, which can be used by anyone to build the new images for other research work.
+
+
+\section{Future Work}
+
+\textbf{Aliasing Handling} The evaluation of \cref{fig:Self-built Images(1)} shows that the current implementation of the algorithm performs not very good even though the image pyramid is used to improve the accuracy, when there exist high frequency variations in the image. Some effort should be made to investigate this issue.
+\\
+
+\textbf{Robust Estimation} Currently, the algorithm estimates the parameters from every pixel and is sensitive to noise. In order to overcome this problem, the image blurring method is used here. But after getting the estimation of blurred images, people should still apply the algorithm on original images with the result of blurred images, where the effect of noise reappeared. So an optimization of the algorithm to reduce the interference of noise should be done in the future work.
+\\
+
+\textbf{Better Initialization} So far, the initialization of parameters is got manually for rectified images or from EXIF data of normal images. But when there are no EXIF data, it's impossible to get the initialization of normal images. So a new step to find an approximate initialization should be added to the algorithm as pre-processing step. And taking the feature points such as Harris corner as candidates for plane patch and estimating the homography matrix roughly are a possible way to get a sufficient initialization .
+\\
+
+\textbf{Post Processing} The current way to warp the image is directly using the function warpPerspective in library OpenCV (\cref{subsec:Image Warping}), and the interpolation methods are only linear or nearest. So the warping result is not very accurate even though the estimation of parameters is very good. It will lead to erroe in the final result. Therefore, a better post processing or mapping function deserves further investigation to improve the final estimations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

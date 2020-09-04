@@ -1,0 +1,44 @@
+\tikzset{external/export next=false}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+
+\begin{tikzpicture}[node distance = 2cm, auto]
+% Place nodes
+\node [startstop] (start) {Start};
+\node (init) [io, below of=start] {Initialization: $k = 0, \vec{\beta}^{(0)}$};
+\node (e) [process, below of=init] {Mapping error: $\vec{E}^{(k)}  = I_1(N(x_{ij}))- F^{(k)}(\vec{\beta}^{(k)}, \rdx_{ij})$};
+\node (dec) [decision, below of=e, yshift=-2cm] {$\left | E^{(k-1)}-E^{(k)} \right | \leq Threshold$};
+\node (final-beta) [process, below of=dec, yshift=-2cm] {Final Result: $\vec{\beta}_{final} = \vec{\beta}^{(k)} $};
+\node (stop) [startstop, below of=final-beta] {Stop};
+\node (Joca) [process, right of=dec, xshift=6cm] {Jacobian Calculating: $\mathbf{J}_{F}$};
+\node (beta-up) [process, above of=Joca] {$\vec{\beta}$ updating: $\vec{\beta}^{(k+1)} = \vec{\beta}^{(k)} + \left(\mathbf{J}_{F}^{T} \mathbf{J}_{F} \right)^{-1} \mathbf{J}_{F}^{T} \vec{E}^{(k)}$};
+\node (k-up) [process, above of=beta-up] {$k$ updating: $k=k+1$};
+
+
+% Draw edges
+\draw [arrow] (start) -- (init);
+\draw [arrow] (init) -- (e);
+\draw [arrow] (e) -- (dec);
+\draw [arrow] (dec) -- node[anchor=east]{True}(final-beta);
+\draw [arrow] (final-beta) -- (stop);
+\draw [arrow] (dec) -- node[anchor=south]{False}(Joca);
+\draw [arrow] (Joca) -- (beta-up);
+\draw [arrow] (beta-up) -- (k-up);
+\draw [arrow] (k-up) -- (e);
+%\path [line] (init) -- (identify);
+%\path [line] (identify) -- (evaluate);
+%\path [line] (evaluate) -- (decide);
+%\path [line] (decide) -| node [near start] {yes} (update);
+%\path [line] (update) |- (identify);
+%\path [line] (decide) -- node {no}(stop);
+%\path [line,dashed] (expert) -- (init);
+%\path [line,dashed] (system) -- (init);
+%\path [line,dashed] (system) |- (evaluate);
+\end{tikzpicture}
+	

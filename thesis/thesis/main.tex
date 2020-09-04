@@ -1,0 +1,75 @@
+\PassOptionsToPackage{table,dvipsnames,svgnames}{xcolor}
+\documentclass[%
+  draft=false, % Set to 'false' before final printing
+	a4paper,
+  fontsize=11pt,
+  version=last,
+	BCOR=10mm,
+	DIV=11,
+	toc=bibliography,
+	toc=listof,
+	toc=index,
+	hyperref,
+	amsmath,
+	ngerman,
+	twoside,
+	headinclude=true,
+	footnotes=multiple,
+	openany
+ ]{scrbook}
+
+\input{preamble}
+
+\newcommand{\worktitle}{An Algorithm to Improve Image Registration for a Piecewise Planar World}
+\newcommand{\typeofthesis}{Master Thesis}
+\newcommand{\nameofauthor}{Bo Cao}
+\newcommand{\placeofexam}{Karlsruhe}
+\newcommand{\dateofexam}{\today}
+\newcommand{\reviewer}{M.Sc. Bastian Erdnüß}
+\newcommand{\advisorA}{Prof. Dr. Ralf Mikut }
+\newcommand{\advisorB}{PD Dr.-Ing. Markus Reischl}
+
+\input{preamble-final-setup}
+
+%\input{content/00-glossary-definitions}
+
+\begin{document}
+\begin{sloppypar}
+\tikzexternalize
+
+\frontmatter
+
+\input{content/00a-titlepage-kit}
+
+\input{content/00b-declaration-kit}
+
+\input{content/00c-abstract}
+
+\input{content/00f-acknowledgement}
+
+\input{content/00d-notation}
+
+\input{content/00e-toc}
+
+
+\mainmatter
+
+\input{content/01-introduction}
+
+\input{content/02-background}
+
+\input{content/03-Homography to Image Registration}
+
+\input{content/04-Implementation}
+
+\input{content/05-Program}
+
+\input{content/06-Evaluation}
+
+\input{content/07-Conclusion}
+
+\backmatter
+
+\input{content/99-backmatter}
+\end{sloppypar}
+\end{document}

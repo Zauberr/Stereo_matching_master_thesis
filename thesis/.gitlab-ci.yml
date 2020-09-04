@@ -1,0 +1,29 @@
+build_thesis:
+  image: blang/latex:ctanfull
+  stage: build
+  script:
+    - cd thesis
+    - mkdir figures-compiled
+    - latexmk -pdf -synctex=1 -interaction=nonstopmode --shell-escape main.tex
+    - mv main.pdf year_name-of-your-thesis_last-name.pdf
+  tags:
+    - VID
+  artifacts:
+    paths:
+    - thesis/year_name-of-your-thesis_last-name.pdf
+    expire_in: 1 week
+
+build_thesis_with_pandoc:
+  image: adstewart/pandoc
+  stage: build
+  script:
+    - mkdir output
+    - cd thesis
+    - pdflatex -synctex=1 -interaction=nonstopmode --shell-escape -output-directory=../output main.tex
+    - mv ../output/Musterbericht.pdf ../output/$CI_COMMIT_SHA-$CI_PROJECT_NAME.pdf
+  tags:
+    - VID
+  artifacts:
+    paths:
+    - output/
+    expire_in: 2 week

@@ -1,0 +1,1 @@
+This folder contains all images used in your presentations. Please create a subfolder for each presentation.
